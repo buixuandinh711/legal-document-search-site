@@ -10,7 +10,7 @@ const config: Config = {
       },
       colors: {
         primary: "#3b82f6",
-        grayborder: "#6b7280",
+        grayborder: "#94a3b8",
       },
       container: {
         center: true,
