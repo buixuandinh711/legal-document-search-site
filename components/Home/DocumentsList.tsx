@@ -181,19 +181,19 @@ export default function DocumentList() {
     <div className="">
       <table className="w-full ">
         <tr className="bg-primary text-white">
-          <th className="w-1/5 border-r border-white p-1 last:border-none rounded-tl">Document Number</th>
+          <th className="w-1/5 rounded-tl border-r border-white p-1 last:border-none">Document Number</th>
           <th className="w-1/5 border-r border-white p-1 last:border-none">Published Date</th>
-          <th className=" border-r border-white p-1 last:border-r-none rounded-tr">Name</th>
+          <th className=" last:border-r-none rounded-tr border-r border-white p-1">Name</th>
         </tr>
         {documents.map((doc) => (
           <tr key={doc.documentNumber} className="even:bg-slate-50">
             <td>
-              <div className="flex min-h-[100px] items-center p-2 justify-center">
+              <div className="flex min-h-[100px] items-center justify-center p-2">
                 <span>{doc.documentNumber}</span>
               </div>
             </td>
             <td>
-              <div className="flex min-h-[100px] items-center p-2 justify-center">
+              <div className="flex min-h-[100px] items-center justify-center p-2">
                 <span>{doc.publishedDate}</span>
               </div>
             </td>

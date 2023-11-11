@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-export default function Sidebar() {
+export default function HomeSidebar() {
   return (
-    <aside className="w-1/4 flex-col gap-8 flex">
+    <aside className="flex w-1/4 flex-col gap-8">
       <div className="">
         <div className="flex h-10 items-center rounded-t bg-primary p-2 font-semibold text-white">
           <h3 className="">CSDL văn bản</h3>

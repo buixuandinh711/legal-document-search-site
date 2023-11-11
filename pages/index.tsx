@@ -1,18 +1,14 @@
-import DocumentList from "@/components/DocumentsList";
-import Header from "@/components/Header";
-import BannerDivider from "@/components/Header/BannerDivider";
-import Sidebar from "@/components/Sidebar";
+import DocumentList from "@/components/Home/DocumentsList";
+import HomeSidebar from "@/components/Home/HomeSidebar";
 
 export default function Home() {
   return (
     <>
-      <Header />
-      <BannerDivider/>
-      <main className="container mt-8 flex gap-4">
+      <main className="container mt-12 flex gap-8">
         <div className="h-[100vh[ flex-1 bg-white">
           <DocumentList />
         </div>
-        <Sidebar />
+        <HomeSidebar />
       </main>
     </>
   );
