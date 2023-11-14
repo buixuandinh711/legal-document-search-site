@@ -12,8 +12,8 @@ export default function Banner() {
     <div className="bg-white">
       <div className="container flex h-40 items-center justify-between">
         <div className="flex w-3/4 min-w-[240px] items-center justify-start">
-          <DocumentMagnifyingGlassIcon className="h-12 w-12 text-primary sm:h-12 sm:w-12 md:h-16 md:w-16 lg:h-20 lg:w-20" />
-          <h1 className={`${homenaje.className} font-homenaje text-3xl font-bold text-primary sm:text-3xl md:text-4xl lg:text-5xl`}>
+          <DocumentMagnifyingGlassIcon className="h-14 w-14 text-primary sm:h-12 sm:w-12 lg:h-16 lg:w-16" />
+          <h1 className={`${homenaje.className} font-homenaje text-3xl font-bold text-primary sm:text-2xl lg:text-4xl`}>
             Blockchain Legal Document System
           </h1>
         </div>

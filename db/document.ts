@@ -101,3 +101,42 @@ export const queryDocSigners = async (docContentHash: string): Promise<QueriedSi
 
   return signers;
 };
+
+export const queryDocs = async (filter: { docType?: string[]; year?: string[] }): Promise<QueriedDoc[]> => {
+  const docTypeIn = (docType: string[]) => sql`AND "doc_type" IN ${sql(docType)}`;
+
+  const result = await sql`
+    SELECT "document_content_hash", "name", "number", "published_timestamp"
+    FROM "onchain_documents"
+    WHERE TRUE ${filter.docType ? docTypeIn(filter.docType) : sql``}
+    ORDER BY "published_timestamp" DESC;
+    `;
+
+  const docs: QueriedDoc[] = result.map((row) => ({
+    documentContentHash: row.document_content_hash,
+    name: row.name,
+    number: row.number,
+    publishedTimestamp: row.published_timestamp,
+  }));
+
+  return docs;
+};
+
+export interface DocumentType {
+  id: string;
+  name: string;
+}
+
+export const queryDocTypes = async (): Promise<DocumentType[]> => {
+  const result = await sql`
+    SELECT "id", "name"
+    FROM "document_types";
+    `;
+
+  const types: DocumentType[] = result.map((row) => ({
+    id: row.id + "",
+    name: row.name,
+  }));
+
+  return types;
+};
