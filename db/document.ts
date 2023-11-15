@@ -1,30 +1,11 @@
-import { DocumentItem } from "@/components/Home/DocumentsList";
 import sql from "@/db/connection";
-import { convertSecsToDate } from "@/utils/utils";
 
 export interface QueriedDoc {
   documentContentHash: string;
   name: string;
   number: string;
-  publishedTimestamp: number;
+  publishedTimestamp: Date;
 }
-
-export const queryAllDocs = async (): Promise<QueriedDoc[]> => {
-  const result = await sql`
-    SELECT "document_content_hash", "name", "number", "published_timestamp"
-    FROM "onchain_documents"
-    ORDER BY "published_timestamp" DESC;
-    `;
-
-  const docs: QueriedDoc[] = result.map((row) => ({
-    documentContentHash: row.document_content_hash,
-    name: row.name,
-    number: row.number,
-    publishedTimestamp: row.published_timestamp,
-  }));
-
-  return docs;
-};
 
 export interface QueriedDocDetail {
   documentContentHash: string;
@@ -32,7 +13,7 @@ export interface QueriedDocDetail {
   name: string;
   docType: string;
   divisionName: string;
-  publishedTimestamp: number;
+  publishedTimestamp: Date;
   officerName: string;
   positionName: string;
   resourceUri: string;
@@ -102,13 +83,25 @@ export const queryDocSigners = async (docContentHash: string): Promise<QueriedSi
   return signers;
 };
 
-export const queryDocs = async (filter: { docType?: string[]; year?: string[] }): Promise<QueriedDoc[]> => {
-  const docTypeIn = (docType: string[]) => sql`AND "doc_type" IN ${sql(docType)}`;
+const docTypeIn = (docType: string[]) => sql`AND "doc_type" IN ${sql(docType)}`;
+const yearIn = (years: string[]) => {
+  const conditions = [];
 
+  for (const year of years) {
+    const startOfYear = `${year}-01-01 00:00:00`;
+    const endOfYear = `${year}-12-31 23:59:59`;
+
+    conditions.push(`("published_timestamp" >= '${startOfYear}' AND "published_timestamp" <= '${endOfYear}')`);
+  }
+
+  return sql.unsafe(`AND (${conditions.join(" OR ")})`);
+};
+
+export const queryDocs = async (filter: { docType?: string[]; year?: string[] }): Promise<QueriedDoc[]> => {
   const result = await sql`
     SELECT "document_content_hash", "name", "number", "published_timestamp"
     FROM "onchain_documents"
-    WHERE TRUE ${filter.docType ? docTypeIn(filter.docType) : sql``}
+    WHERE TRUE ${filter.docType?.length ? docTypeIn(filter.docType) : sql``} ${filter.year?.length ? yearIn(filter.year) : sql``}
     ORDER BY "published_timestamp" DESC;
     `;
 

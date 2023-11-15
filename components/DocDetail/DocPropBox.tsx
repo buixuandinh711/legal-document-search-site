@@ -44,7 +44,7 @@ export default function DocPropBox({ docDetail }: { docDetail: DocumentDetail })
           </tr>
           <tr className="even:bg-slate-50">
             <td className="w-2/5 border border-grayborder p-3">Published date</td>
-            <td className="w-3/5 border border-grayborder p-3">{docDetail.publishedDate}</td>
+            <td className="w-3/5 border border-grayborder p-3">{docDetail.publishedDate.toString()}</td>
           </tr>
           <tr className="even:bg-slate-50">
             <td className="w-2/5 border border-grayborder p-3">Signed by</td>

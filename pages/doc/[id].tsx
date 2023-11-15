@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps<{
       documentType: docDetailQuery.docType,
       publishDivision: docDetailQuery.divisionName,
       publisher: docDetailQuery.officerName + " - " + docDetailQuery.positionName,
-      publishedDate: convertSecsToDate(docDetailQuery.publishedTimestamp),
+      publishedDate: convertSecsToDate(Math.floor(docDetailQuery.publishedTimestamp.getTime() / 1000)),
       signers: docSignersQuery,
     };
 

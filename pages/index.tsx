@@ -1,6 +1,6 @@
 import DocumentList, { DocumentItem } from "@/components/Home/DocumentsList";
 import HomeSidebar from "@/components/Home/HomeSidebar";
-import { DocumentType, queryAllDocs, queryDocTypes, queryDocs } from "@/db/document";
+import { DocumentType, queryDocTypes, queryDocs } from "@/db/document";
 import { convertQueryParam, convertSecsToDate } from "@/utils/utils";
 import { GetServerSideProps } from "next";
 
@@ -24,12 +24,15 @@ export const getServerSideProps: GetServerSideProps<{
   try {
     const { docType, year } = context.query;
 
-    const [queriedDocs, queriedDocTypes] = await Promise.all([queryDocs({ docType: convertQueryParam(docType) }), queryDocTypes()]);
+    const [queriedDocs, queriedDocTypes] = await Promise.all([
+      queryDocs({ docType: convertQueryParam(docType), year: convertQueryParam(year) }),
+      queryDocTypes(),
+    ]);
     const docsList: DocumentItem[] = queriedDocs.map((doc) => ({
       docContentHash: doc.documentContentHash,
       documentNumber: doc.number,
       name: doc.name,
-      publishedDate: convertSecsToDate(doc.publishedTimestamp),
+      publishedDate: convertSecsToDate(Math.floor(doc.publishedTimestamp.getTime() / 1000)),
     }));
 
     return {
