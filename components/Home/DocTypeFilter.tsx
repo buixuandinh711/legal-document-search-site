@@ -23,7 +23,7 @@ export function DocTypeFilter({ docTypesList }: { docTypesList: DocumentType[] }
             href=""
             className="relative py-[5px] pr-4 text-lg font-bold text-primary  after:absolute after:-bottom-[3px] after:left-0 after:right-4 after:border-b-[3px] after:border-b-primary"
           >
-            <span>Document Type</span>
+            <span>Loại văn bản</span>
           </Link>
         </h2>
       </div>

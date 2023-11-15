@@ -15,9 +15,9 @@ export default function DocumentList({ docsList }: { docsList: DocumentItem[] })
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-primary text-white">
-            <th className="w-1/5 rounded-tl border-r border-white p-1 last:border-none">Document Number</th>
-            <th className="w-1/5 border-r border-white p-1 last:border-none">Published Date</th>
-            <th className=" last:border-r-none rounded-tr border-r border-white p-1">Name</th>
+            <th className="w-1/5 rounded-tl border-r border-white p-1 last:border-none">{"Số hiệu"}</th>
+            <th className="w-1/5 border-r border-white p-1 last:border-none">{"Ngày ban hành"}</th>
+            <th className=" last:border-r-none rounded-tr border-r border-white p-1">{"Tên"}</th>
           </tr>
         </thead>
         <tbody>

@@ -26,7 +26,7 @@ export function YearFilter() {
             href=""
             className="relative py-[5px] pr-4 text-lg font-bold text-primary  after:absolute after:-bottom-[3px] after:left-0 after:right-4 after:border-b-[3px] after:border-b-primary"
           >
-            <span>Published Year</span>
+            <span>Năm ban hành</span>
           </Link>
         </h2>
       </div>
@@ -71,8 +71,7 @@ export function YearFilter() {
                     }}
                   />
                   {(() => {
-                    if (index === 0) return "This year";
-                    if (index === yearsArray.length - 1) return `Before ${year}`;
+                    if (index === 0) return "Năm nay";
                     return year;
                   })()}
                 </label>
