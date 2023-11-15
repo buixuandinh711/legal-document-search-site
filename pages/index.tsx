@@ -7,9 +7,9 @@ import { GetServerSideProps } from "next";
 export default function Home({ docsList, docTypes }: { docsList: DocumentItem[]; docTypes: DocumentType[] }) {
   return (
     <>
-      <main className="container mt-12 flex gap-8">
+      <main className="container mt-12 flex gap-8 items-start">
         <HomeSidebar docTypesList={docTypes} />
-        <div className="h-[100vh[ flex-1 bg-white">
+        <div className="flex-1 bg-white">
           <DocumentList docsList={docsList} />
         </div>
       </main>
