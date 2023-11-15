@@ -1,5 +1,6 @@
 import { Homenaje } from "next/font/google";
 import { DocumentMagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import SearchBar from "@/components/Header/SearchBar";
 
 const homenaje = Homenaje({
   subsets: ["latin"],
@@ -17,14 +18,7 @@ export default function Banner() {
             Blockchain Legal Document System
           </h1>
         </div>
-        <div className="flex items-center justify-between gap-1">
-          <input
-            type="text"
-            placeholder="Nhập từ khóa tìm kiếm..."
-            className=" h-10 flex-1 rounded border border-grayborder p-1 text-base"
-          />
-          <button className="inline-flex h-10 items-center justify-center rounded bg-primary px-4 text-white">Tìm</button>
-        </div>
+        <SearchBar />
       </div>
     </div>
   );

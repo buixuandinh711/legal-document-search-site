@@ -97,14 +97,22 @@ const yearIn = (years: string[]) => {
   return sql.unsafe(`AND (${conditions.join(" OR ")})`);
 };
 const divIn = (div: string[]) => sql`AND "division_id" IN ${sql(div)}`;
+const searchIn = (searchText: string) => sql`AND "name" ILIKE ${"%" + searchText + "%"}`;
 
-export const queryDocs = async (filter: { docType?: string[]; year?: string[]; div: string[] }): Promise<QueriedDoc[]> => {
+export const queryDocs = async (filter: {
+  docType?: string[];
+  year?: string[];
+  div: string[];
+  searchText?: string;
+}): Promise<QueriedDoc[]> => {
   const result = await sql`
     SELECT "document_content_hash", "name", "number", "published_timestamp"
     FROM "onchain_documents"
-    WHERE TRUE ${filter.docType?.length ? docTypeIn(filter.docType) : sql``} ${filter.year?.length ? yearIn(filter.year) : sql``} ${
-      filter.div?.length ? divIn(filter.div) : sql``
-    }
+    WHERE TRUE 
+      ${filter.docType?.length ? docTypeIn(filter.docType) : sql``} 
+      ${filter.year?.length ? yearIn(filter.year) : sql``} 
+      ${filter.div?.length ? divIn(filter.div) : sql``}
+      ${filter.searchText ? searchIn(filter.searchText) : sql``}
     ORDER BY "published_timestamp" DESC;
     `;
 
