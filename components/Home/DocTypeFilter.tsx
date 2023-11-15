@@ -27,7 +27,7 @@ export function DocTypeFilter({ docTypesList }: { docTypesList: DocumentType[] }
           </Link>
         </h2>
       </div>
-      <div className=" w-full bg-gray-100 py-4 pr-1">
+      <div className=" w-full bg-boldbg py-4 pr-1">
         <ul className="m-0 max-h-[140px] list-none overflow-y-auto pl-4">
           {docTypesList.map((docType) => (
             <li key={docType.id} className=" m-0 w-full cursor-pointer p-0 leading-loose">

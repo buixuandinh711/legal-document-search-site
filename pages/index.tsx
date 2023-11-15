@@ -4,11 +4,11 @@ import { DocumentType, queryDocTypes, queryDocs } from "@/db/document";
 import { convertQueryParam, convertSecsToDate } from "@/utils/utils";
 import { GetServerSideProps } from "next";
 
-export default function Home({ docsList, docTypes }: { docsList: DocumentItem[]; docTypes: DocumentType[] }) {
+export default function Home({ docsList }: { docsList: DocumentItem[] }) {
   return (
     <>
-      <main className="container mt-12 flex gap-8 items-start">
-        <HomeSidebar docTypesList={docTypes} />
+      <main className="container mt-12 flex items-start gap-8">
+        <HomeSidebar/>
         <div className="flex-1 bg-white">
           <DocumentList docsList={docsList} />
         </div>
@@ -19,14 +19,12 @@ export default function Home({ docsList, docTypes }: { docsList: DocumentItem[];
 
 export const getServerSideProps: GetServerSideProps<{
   docsList: DocumentItem[];
-  docTypes: DocumentType[];
 }> = async (context) => {
   try {
-    const { docType, year } = context.query;
+    const { docType, year, div } = context.query;
 
-    const [queriedDocs, queriedDocTypes] = await Promise.all([
-      queryDocs({ docType: convertQueryParam(docType), year: convertQueryParam(year) }),
-      queryDocTypes(),
+    const [queriedDocs] = await Promise.all([
+      queryDocs({ docType: convertQueryParam(docType), year: convertQueryParam(year), div: convertQueryParam(div) }),
     ]);
     const docsList: DocumentItem[] = queriedDocs.map((doc) => ({
       docContentHash: doc.documentContentHash,
@@ -38,7 +36,6 @@ export const getServerSideProps: GetServerSideProps<{
     return {
       props: {
         docsList: docsList,
-        docTypes: queriedDocTypes,
       },
     };
   } catch (error) {

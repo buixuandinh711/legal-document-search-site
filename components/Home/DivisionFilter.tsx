@@ -1,21 +1,17 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
-const currentYear = new Date().getFullYear();
-const yearsArray = Array.from({ length: 10 }, (_, index) => (currentYear - index).toString());
-
-export function YearFilter() {
+export function DivisionFilter({ name, divisionsList }: { name: string; divisionsList: { id: string; name: string }[] }) {
   const router = useRouter();
-  const { year } = router.query;
-  let chonsenYears: string[];
+  const { div } = router.query;
+  let chonsenDivs: string[];
 
-  if (year === undefined) {
-    chonsenYears = [];
-  } else if (typeof year === "string") {
-    chonsenYears = [year];
+  if (div === undefined) {
+    chonsenDivs = [];
+  } else if (typeof div === "string") {
+    chonsenDivs = [div];
   } else {
-    chonsenYears = year;
+    chonsenDivs = div;
   }
 
   return (
@@ -26,29 +22,29 @@ export function YearFilter() {
             href=""
             className="relative py-[5px] pr-4 text-lg font-bold text-primary  after:absolute after:-bottom-[3px] after:left-0 after:right-4 after:border-b-[3px] after:border-b-primary"
           >
-            <span>Published Year</span>
+            <span>{name}</span>
           </Link>
         </h2>
       </div>
       <div className=" w-full bg-boldbg py-4 pr-1">
         <ul className="m-0 max-h-[140px] list-none overflow-y-auto pl-4">
-          {yearsArray.map((year, index) => (
-            <li key={year} className=" m-0 w-full cursor-pointer p-0 leading-loose">
+          {divisionsList.map((div) => (
+            <li key={div.id} className=" m-0 w-full cursor-pointer p-0 leading-loose">
               <span className="cursor-pointer text-sm font-normal ">
-                <label htmlFor={`filter-year-${year.toLocaleLowerCase()}`} className="mb-[2px] block cursor-pointer">
+                <label htmlFor={`filter-div-${div.id}`} className="mb-[2px] block cursor-pointer">
                   <input
                     type="checkbox"
-                    id={`filter-year-${year.toLocaleLowerCase()}`}
+                    id={`filter-div-${div.id}`}
                     className="form-checkbox mr-2 h-3 w-3 border-primary p-0  focus:ring-0"
-                    checked={chonsenYears.includes(year)}
+                    checked={chonsenDivs.includes(div.id)}
                     onChange={() => {
                       const basePath = router.asPath.split("?")[0];
                       let newChosen;
 
-                      if (chonsenYears.includes(year)) {
-                        newChosen = chonsenYears.filter((chosen) => chosen !== year);
+                      if (chonsenDivs.includes(div.id)) {
+                        newChosen = chonsenDivs.filter((chosen) => chosen !== div.id);
                       } else {
-                        newChosen = chonsenYears.concat(year);
+                        newChosen = chonsenDivs.concat(div.id);
                       }
 
                       const newQuery = {
@@ -56,7 +52,7 @@ export function YearFilter() {
                       };
 
                       delete newQuery.slug;
-                      newQuery.year = newChosen;
+                      newQuery.div = newChosen;
 
                       router.replace(
                         {
@@ -70,11 +66,7 @@ export function YearFilter() {
                       );
                     }}
                   />
-                  {(() => {
-                    if (index === 0) return "This year";
-                    if (index === yearsArray.length - 1) return `Before ${year}`;
-                    return year;
-                  })()}
+                  {div.name}
                 </label>
               </span>
             </li>

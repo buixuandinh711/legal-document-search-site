@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         primary: "#3b82f6",
         grayborder: "#cbd5e1",
+        boldbg: "#f8fafc"
       },
       container: {
         center: true,

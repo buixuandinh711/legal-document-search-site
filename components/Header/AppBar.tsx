@@ -1,3 +1,5 @@
+import Navigator from "@/components/Header/Navigator";
+import { docTypes, ministries, provinces } from "@/db/static";
 import Link from "next/link";
 
 export default function AppBar() {
@@ -7,17 +9,14 @@ export default function AppBar() {
         <nav className="h-full">
           <ul className="flex h-full items-center justify-between gap-4">
             <li className="flex h-full w-40 cursor-pointer items-center justify-center hover:bg-blue-600">
-              <Link href={"/"}>Home</Link>
+              <Link href={"/"}>{"Trang chủ"}</Link>
             </li>
-            <li className="flex h-full w-40 cursor-pointer items-center justify-center hover:bg-blue-600">
-              <Link href={"#"}>Central Authority</Link>
-            </li>
-            <li className="flex h-full w-40 cursor-pointer items-center justify-center hover:bg-blue-600">
-              <Link href={"#"}>Local Authority</Link>
-            </li>
-            <li className="flex h-full w-40 cursor-pointer items-center justify-center hover:bg-blue-600">
-              <Link href={"#"}>Category</Link>
-            </li>
+            <Navigator name={"Trung ương"} items={ministries.map((item) => ({ name: item.name, href: `/?div=${item.id}` }))} />
+            <Navigator
+              name={"Địa phương"}
+              items={provinces.map((item) => ({ name: item.name, href: `/?div=H${item.id}&div=K${item.id}` }))}
+            />
+            <Navigator name={"Loại văn bản"} items={docTypes.map((item) => ({ name: item.name, href: `/?docType=${item.name}` }))} />
           </ul>
         </nav>
       </div>
